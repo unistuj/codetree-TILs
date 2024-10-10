@@ -20,7 +20,7 @@ map<int, Soldier> sMap;
 map<int, Soldier> afterBattle;
 map<int, Soldier> tempSMap;
 int outsol[31];
-const int dy[4] = {1, 0, -1, 0};
+const int dy[4] = {-1, 0, 1, 0};
 const int dx[4] = {0, 1, 0, -1};
 int visited[31];
 bool flag = true;
@@ -102,6 +102,7 @@ int main() {
             }
         }
     }
+   
     afterBattle = sMap;
     for(int i = 0; i < q; i++){
         cin >> solId >> dir;
@@ -121,7 +122,7 @@ int main() {
             		}
         		}
 			}
-            
+        
         }
     }
     
