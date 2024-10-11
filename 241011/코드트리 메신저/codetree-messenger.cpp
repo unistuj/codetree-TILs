@@ -54,6 +54,7 @@ void muteRoom(int room, int mRoom, int auth, int number, bool isMute){
             alarm[room] += 1;
         }
     }
+    if(mute[room])return;
     muteRoom(parents[room], mRoom, auth-1, number+1, isMute);   
 }
 
