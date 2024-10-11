@@ -16,10 +16,8 @@ void countAlarm(int number){
     if(cMap[number].size()){
         for(int i = 0; i < cMap[number].size(); i++){
             countAlarm(cMap[number][i]);
-            if(mute[cMap[number][i]] == false){
-                for(int j = 1; j < 22; j++){
-                alarmStatus[number][j-1] += alarmStatus[cMap[number][i]][j];
-                }
+            for(int j = 1; j < 22; j++){
+            alarmStatus[number][j-1] += alarmStatus[cMap[number][i]][j];
             }
         }
         for(int i = 0; i < 22; i++){
@@ -27,39 +25,36 @@ void countAlarm(int number){
         }
     }
     if(number != 0 ){
-        if(mute[number] == false){
-            if(authority[number] > 20){
-                alarmStatus[parents[number]][21] +=1;    
-             }else{
-                alarmStatus[parents[number]][authority[number]-1] +=1;
-            }
+        if(authority[number] > 20){
+            alarmStatus[parents[number]][21] +=1;    
+        }else{
+            alarmStatus[parents[number]][authority[number]-1] +=1;
         }
     }
 }
 
 void muteRoom(int room, int mRoom, int auth, int number, bool isMute){
-    if(room != 0){
-        if(isMute){
-            for(int j = number; j < 22; j++){
-                alarmStatus[room][j-number] -= alarmStatus[mRoom][j];
-                alarm[room] -= alarmStatus[mRoom][j];
-            }
-            if(auth >= 0){
-                alarmStatus[room][auth] -= 1;
-                alarm[room] -= 1;
-            }
-        }else{
-            for(int j = number; j < 22; j++){
-                alarmStatus[room][j-number] += alarmStatus[mRoom][j];
-                alarm[room] += alarmStatus[mRoom][j];
-            }
-            if(auth >= 0){
-                alarmStatus[room][auth] += 1;
-                alarm[room] += 1;
-            }
+    if(room == 0)return;
+    if(isMute){
+        for(int j = number; j < 22; j++){
+            alarmStatus[room][j-number] -= alarmStatus[mRoom][j];
+            alarm[room] -= alarmStatus[mRoom][j];
         }
-        muteRoom(parents[room], mRoom, auth-1, number+1, isMute);
+        if(auth >= 0){
+            alarmStatus[room][auth] -= 1;
+            alarm[room] -= 1;
+        }
+    }else{
+        for(int j = number; j < 22; j++){
+            alarmStatus[room][j-number] += alarmStatus[mRoom][j];
+            alarm[room] += alarmStatus[mRoom][j];
+        }
+        if(auth >= 0){
+            alarmStatus[room][auth] += 1;
+            alarm[room] += 1;
+        }
     }
+    muteRoom(parents[room], mRoom, auth-1, number+1, isMute);   
 }
 
 void changePower(int room, int beforePower, int afterPower){
