@@ -129,7 +129,7 @@ int main() {
         }else if(order == 300){
             int cRoom, power;
             cin >> cRoom >> power;
-            changePower(parents[cRoom], authority[cRoom]-1, power-1);
+            if(mute[cRoom] == false)changePower(parents[cRoom], authority[cRoom]-1, power-1);
             authority[cRoom] = power;
         }else if(order == 400){
             int aRoom, bRoom;
