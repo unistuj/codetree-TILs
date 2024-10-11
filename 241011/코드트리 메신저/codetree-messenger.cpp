@@ -63,13 +63,12 @@ void changePower(int room, int beforePower, int afterPower){
     if(beforePower >= 0){
         alarmStatus[room][beforePower] -= 1;
         alarm[room] -= 1;
-        if(mute[room])beforePower = 0;
     }
     if(afterPower >= 0){
         alarmStatus[room][afterPower] += 1;
         alarm[room] += 1;
-        if(mute[room])afterPower = 0;
     }
+    if(mute[room])return;
     changePower(parents[room], beforePower-1, afterPower-1);
 }
 
